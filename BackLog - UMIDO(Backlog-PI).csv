@@ -1,41 +1,41 @@
 PROJETO UMIDO - BACKLOG,,,,,,,,,,,,
-Requisitos,DescriÁ„o,,,,,,,,ClassificaÁ„o,,Status,Responsavel
-"ProtÛtipo no Figma	",Criar um protÛtipo do site antes da implementaÁ„o final,,,,,,,,Essencial,,Pronto,
-Criar estrutura do banco de dados,"Criar tabelas para armazenar sensores, mediÁıes, usu·rios e alertas",,,,,,,,Essencial,,Pronto,
-DocumentaÁ„o do projeto,"DocumentaÁ„o contendo: Contexto, Justificativa, Objetivo, Premissas, RestriÁıes e Escopo ",,,,,,,,Essencial,,Pronto,
-Montar Arduino e sensores,"Montar o arduÌno, conectar o sensor de umidade para iniciar a leitura dos dados",,,,,,,,Essencial,,Pronto,
- InstalaÁ„o e configuraÁ„o Arduino IDE,Instalar Arduino IDE e programar a IDE para receber e mostrar os dados na tela,,,,,,,,Essencial,,Pronto,
-Diagrama de vis„o de negÛcio,Diagrama de negÛcio explicativo para usu·rio,,,,,,,,Essencial,,Pronto,
+Requisitos,Descri√ß√£o,,,,,,,,Classifica√ß√£o,,Status,Responsavel
+"Prot√≥tipo no Figma	",Criar um prot√≥tipo do site antes da implementa√ß√£o final,,,,,,,,Essencial,,Pronto,
+Criar estrutura do banco de dados,"Criar tabelas para armazenar sensores, medi√ß√µes, usu√°rios e alertas",,,,,,,,Essencial,,Pronto,
+Documenta√ß√£o do projeto,"Documenta√ß√£o contendo: Contexto, Justificativa, Objetivo, Premissas, Restri√ß√µes e Escopo ",,,,,,,,Essencial,,Pronto,
+Montar Arduino e sensores,"Montar o ardu√≠no, conectar o sensor de umidade para iniciar a leitura dos dados",,,,,,,,Essencial,,Pronto,
+ Instala√ß√£o e configura√ß√£o Arduino IDE,Instalar Arduino IDE e programar a IDE para receber e mostrar os dados na tela,,,,,,,,Essencial,,Pronto,
+Diagrama de vis√£o de neg√≥cio,Diagrama de neg√≥cio explicativo para usu√°rio,,,,,,,,Essencial,,Pronto,
 Instalar Linux Lubuntu na VM Local,Instalar Linux na VM Local (Oracle Virtual Box) para ambiente principal,,,,,,,,Essencial,,Pronto,
-Tela com mÈtricas estatÌsticas,Criar gr·ficos de variaÁ„o de registros de dados para a tela inicial,,,,,,,,Essencial,,Pronto,
-Fazer slides de apresentaÁ„o,"Criar PowerPoint para exibir o protÛtipo do site e apresentaÁ„o de contexto, etc",,,,,,,,Importante,,Pronto,
-Configurar projeto no GitHub,Configurar repositÛrio do projeto no GitHub,,,,,,,,Essencial,,Pronto,
-Realizar testes de leitura do sensor,Validar a captaÁ„o correta dos dados pelo Arduino,,,,,,,,Essencial,,Pronto,
-Tela inicial do site,Criar p·gina com informaÁıes sobre o projeto e acesso ao painel de mÈtricas,,,,,,,,Essencial,,A fazer,Erick
-Tela de cadastro de usu·rio,"Cadastro com validaÁ„o de CPF e e-mail, alÈm de especificar o tipo de plantaÁ„o",,,,,,,,Essencial,,A fazer,dereck/gustavo
-Tela de login,AutenticaÁ„o por e-mail e senha,,,,,,,,Essencial,,A fazer,dereck/gustavo
-RecuperaÁ„o de senha,Permitir redefiniÁ„o de senha via e-mail,,,,,,,,Desej·vel,,A fazer,
-Dashboard de mÈtricas,Exibir gr·ficos e indicadores das mediÁıes de umidade,,,,,,,,Essencial,,A fazer,bill
-ManutenÁ„o de sensores por meio do site,"Tela para adicionar, remover ou editar sensores cadastrados",,,,,,,,Essencial,,A fazer,bill
-Tela de simulador financeiro,Permitir entrada de dados e exibiÁ„o dos c·lculos financeiros,,,,,,,,Essencial,,Pronto,
-Testes de integraÁ„o do hardware,Garantir que o Arduino envia dados corretamente ao sistema,,,,,,,,Essencial,,A fazer,
+Tela com m√©tricas estat√≠sticas,Criar gr√°ficos de varia√ß√£o de registros de dados para a tela inicial,,,,,,,,Essencial,,Pronto,
+Fazer slides de apresenta√ß√£o,"Criar PowerPoint para exibir o prot√≥tipo do site e apresenta√ß√£o de contexto, etc",,,,,,,,Importante,,Pronto,
+Configurar projeto no GitHub,Configurar reposit√≥rio do projeto no GitHub,,,,,,,,Essencial,,Pronto,
+Realizar testes de leitura do sensor,Validar a capta√ß√£o correta dos dados pelo Arduino,,,,,,,,Essencial,,Pronto,
+Tela inicial do site,Criar p√°gina com informa√ß√µes sobre o projeto e acesso ao painel de m√©tricas,,,,,,,,Essencial,,A fazer,Erick
+Tela de cadastro de usu√°rio,"Cadastro com valida√ß√£o de CPF e e-mail, al√©m de especificar o tipo de planta√ß√£o",,,,,,,,Essencial,,A fazer,dereck/gustavo
+Tela de login,Autentica√ß√£o por e-mail e senha,,,,,,,,Essencial,,A fazer,dereck/gustavo
+Recupera√ß√£o de senha,Permitir redefini√ß√£o de senha via e-mail,,,,,,,,Desej√°vel,,A fazer,
+Dashboard de m√©tricas,Exibir gr√°ficos e indicadores das medi√ß√µes de umidade,,,,,,,,Essencial,,A fazer,bill
+Manuten√ß√£o de sensores por meio do site,"Tela para adicionar, remover ou editar sensores cadastrados",,,,,,,,Essencial,,A fazer,bill
+Tela de simulador financeiro,Permitir entrada de dados e exibi√ß√£o dos c√°lculos financeiros,,,,,,,,Essencial,,Pronto,
+Testes de integra√ß√£o do hardware,Garantir que o Arduino envia dados corretamente ao sistema,,,,,,,,Essencial,,A fazer,
 Testes de interface,Validar usabilidade e funcionamento das telas do site,,,,,,,,Essencial,,A fazer,
 ,,,,,,,,,,,,
 ,,,,,,,,,,,,
 ,,,,,,,,,,,,
-Projetos atualizado no GitHub,Atualizar GIT com os requesitos,,,,,,,,Importante,,A fazer,CÈsar
-DocumentaÁ„o do Projeto Atualizada,DocumentaÁ„o atualizada com dados e restriÁıes e correÁıes feitas,,,,,,,,Importante,,A fazer,Dereck
+Projetos atualizado no GitHub,Atualizar GIT com os requesitos,,,,,,,,Importante,,Pronto,C√©sar
+Documenta√ß√£o do Projeto Atualizada,Documenta√ß√£o atualizada com dados e restri√ß√µes e corre√ß√µes feitas,,,,,,,,Importante,,Pronto , C√©sar
 Planilha de Riscos do Projeto,,,,,,,,,,,A fazer,
-EspecificaÁ„o da Dashboard,,,,,,,,,,,A fazer,
+Especifica√ß√£o da Dashboard,,,,,,,,,,,A fazer,
 Site do simulador,Criar calculadora do prototipo,,,,,,,,,,A fazer,cesar
-Diagrama de SoluÁ„o,,,,,,,,,,,A fazer,
-ferramenta de Gest„o planejada,Atualizar os dados no Trello e Excel,,,,,,,,Importante,,A fazer,Gustavo
-Modelagem LÛgica do Projeto v1,,,,,,,,,Importante,,Pronto,
-Script de criaÁ„o do Banco,,,,,,,,,Importante,,Pronto,
+Diagrama de Solu√ß√£o,,,,,,,,,,,A fazer,
+ferramenta de Gest√£o planejada,Atualizar os dados no Trello e Excel,,,,,,,,Importante,,A fazer,Gustavo
+Modelagem L√≥gica do Projeto v1,,,,,,,,,Importante,,Pronto,
+Script de cria√ß√£o do Banco,,,,,,,,,Importante,,Pronto,
 Tabelas criadas em BD local,Criar as  tabelas de banco de dados no MySQL local,,,,,,,,Importante,,Pronto,
-Simular a integraÁ„o do Sistema,,,,,,,,,,,A fazer,
+Simular a integra√ß√£o do Sistema,,,,,,,,,,,A fazer,
 API Local,Integrar corretamente a API,,,,,,,,,,A fazer,
-MYSQL na VMLinux,Instalar o MySQL na Maquina Virtual Linux,,,,,,,,Importante,,A fazer,CÈsar
-Validar a soluÁ„o tÈcnica,,,,,,,,,,,A fazer,
+MYSQL na VMLinux,Instalar o MySQL na Maquina Virtual Linux,,,,,,,,Importante,,Pronto,C√©sar
+Validar a solu√ß√£o t√©cnica,,,,,,,,,,,A fazer,
 Atualizar BackLog,Atualizar o Backlog com os novos requisitos das novas sprints,,,,,,,,Importante,,A fazer,Gustavo
-Reformular Design,Corrigir os designs do prototipo do site,,,,,,,,Importante,,A fazer,Erick
+Reformular Design,Corrigir os designs do prototipo do site,,,,,,,,Importante,,Pronto,Erick
