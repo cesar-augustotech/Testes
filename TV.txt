@@ -1,0 +1,237 @@
+import java.util.Scanner;
+
+public class Televisao {
+
+    // ── Atributos ──────────────────────────────────────────────
+    private boolean ligada;
+    private boolean mutada;
+    private int volume;
+    private int canal;
+
+    private static final int VOLUME_MIN  = 0;
+    private static final int VOLUME_MAX  = 100;
+    private static final int CANAL_MIN   = 1;
+    private static final int CANAL_MAX   = 999;
+
+    // ── Construtor ─────────────────────────────────────────────
+    public Televisao() {
+        this.ligada = false;
+        this.mutada = false;
+        this.volume = 50;
+        this.canal  = 1;
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  MÉTODOS DE AÇÃO
+    // ══════════════════════════════════════════════════════════
+
+    public void ligar() {
+        if (ligada) {
+            System.out.println("⚠  A televisão já está ligada.");
+            return;
+        }
+        ligada = true;
+        System.out.println("✅ Televisão ligada! Canal: " + canal + " | Volume: " + volume);
+    }
+
+    public void desligar() {
+        if (!ligada) {
+            System.out.println("⚠  A televisão já está desligada.");
+            return;
+        }
+        ligada = false;
+        mutada = false;
+        System.out.println("🔴 Televisão desligada.");
+    }
+
+    // ── Volume ─────────────────────────────────────────────────
+
+    public void aumentarVolume() {
+        if (!ligada) {
+            System.out.println("⚠  A televisão está desligada.");
+            return;
+        }
+        if (mutada) {
+            System.out.println("⚠  A televisão está mutada. Desmute antes de alterar o volume.");
+            return;
+        }
+        if (volume >= VOLUME_MAX) {
+            System.out.println("⚠  Volume já está no máximo (" + VOLUME_MAX + ").");
+            return;
+        }
+        volume++;
+        System.out.println("🔊 Volume: " + volume);
+    }
+
+    public void diminuirVolume() {
+        if (!ligada) {
+            System.out.println("⚠  A televisão está desligada.");
+            return;
+        }
+        if (mutada) {
+            System.out.println("⚠  A televisão está mutada. Desmute antes de alterar o volume.");
+            return;
+        }
+        if (volume <= VOLUME_MIN) {
+            System.out.println("⚠  Volume já está no mínimo (" + VOLUME_MIN + ").");
+            return;
+        }
+        volume--;
+        System.out.println("🔉 Volume: " + volume);
+    }
+
+    // ── Canal ──────────────────────────────────────────────────
+
+    public void aumentarCanal() {
+        if (!ligada) {
+            System.out.println("⚠  A televisão está desligada.");
+            return;
+        }
+        if (canal >= CANAL_MAX) {
+            System.out.println("⚠  Canal já está no máximo (" + CANAL_MAX + ").");
+            return;
+        }
+        canal++;
+        System.out.println("📺 Canal: " + canal);
+    }
+
+    public void diminuirCanal() {
+        if (!ligada) {
+            System.out.println("⚠  A televisão está desligada.");
+            return;
+        }
+        if (canal <= CANAL_MIN) {
+            System.out.println("⚠  Canal já está no mínimo (" + CANAL_MIN + ").");
+            return;
+        }
+        canal--;
+        System.out.println("📺 Canal: " + canal);
+    }
+
+    public void irParaCanal(int canalDesejado) {
+        if (!ligada) {
+            System.out.println("⚠  A televisão está desligada.");
+            return;
+        }
+        if (canalDesejado < CANAL_MIN || canalDesejado > CANAL_MAX) {
+            System.out.println("⚠  Canal inválido. Informe um valor entre "
+                    + CANAL_MIN + " e " + CANAL_MAX + ".");
+            return;
+        }
+        if (canalDesejado == canal) {
+            System.out.println("⚠  A televisão já está no canal " + canal + ".");
+            return;
+        }
+        canal = canalDesejado;
+        System.out.println("📺 Trocado para o canal: " + canal);
+    }
+
+    // ── Mudo ───────────────────────────────────────────────────
+
+    public void mutar() {
+        if (!ligada) {
+            System.out.println("⚠  A televisão está desligada.");
+            return;
+        }
+        if (mutada) {
+            System.out.println("⚠  A televisão já está mutada.");
+            return;
+        }
+        mutada = true;
+        System.out.println("🔇 Televisão mutada.");
+    }
+
+    public void desmutar() {
+        if (!ligada) {
+            System.out.println("⚠  A televisão está desligada.");
+            return;
+        }
+        if (!mutada) {
+            System.out.println("⚠  A televisão não está mutada.");
+            return;
+        }
+        mutada = false;
+        System.out.println("🔊 Som restaurado. Volume: " + volume);
+    }
+
+    // ── Status ─────────────────────────────────────────────────
+
+    public void exibirStatus() {
+        System.out.println("╔══════════════════════════════╗");
+        System.out.println("║       STATUS DA TV           ║");
+        System.out.println("╠══════════════════════════════╣");
+        System.out.println("║ Estado : " + (ligada ? "Ligada  " : "Desligada") + "             ║");
+        if (ligada) {
+            System.out.println("║ Canal  : " + String.format("%-21d", canal) + "║");
+            System.out.println("║ Volume : " + String.format("%-21d", volume) + "║");
+            System.out.println("║ Mudo   : " + String.format("%-21s", (mutada ? "Sim" : "Não")) + "║");
+        }
+        System.out.println("╚══════════════════════════════╝");
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  MENU PRINCIPAL
+    // ══════════════════════════════════════════════════════════
+
+    public static void main(String[] args) {
+
+        Scanner scanner  = new Scanner(System.in);
+        Televisao tv     = new Televisao();
+        int opcao        = -1;
+
+        while (opcao != 0) {
+
+            System.out.println("\n╔══════════════════════════════╗");
+            System.out.println("║    CONTROLE DA TELEVISÃO     ║");
+            System.out.println("╠══════════════════════════════╣");
+            System.out.println("║  1 - Ligar                   ║");
+            System.out.println("║  2 - Desligar                ║");
+            System.out.println("║  3 - Aumentar volume         ║");
+            System.out.println("║  4 - Diminuir volume         ║");
+            System.out.println("║  5 - Próximo canal           ║");
+            System.out.println("║  6 - Canal anterior          ║");
+            System.out.println("║  7 - Ir para canal específico║");
+            System.out.println("║  8 - Mutar                   ║");
+            System.out.println("║  9 - Desmutar                ║");
+            System.out.println("║ 10 - Ver status              ║");
+            System.out.println("║  0 - Sair                    ║");
+            System.out.println("╚══════════════════════════════╝");
+            System.out.print("Escolha uma opção: ");
+
+            // Valida se a entrada é um número inteiro
+            if (!scanner.hasNextInt()) {
+                System.out.println("⚠  Entrada inválida. Digite um número.");
+                scanner.next(); // descarta o token inválido
+                continue;
+            }
+
+            opcao = scanner.nextInt();
+
+            switch (opcao) {
+                case 1:  tv.ligar();           break;
+                case 2:  tv.desligar();        break;
+                case 3:  tv.aumentarVolume();  break;
+                case 4:  tv.diminuirVolume();  break;
+                case 5:  tv.aumentarCanal();   break;
+                case 6:  tv.diminuirCanal();   break;
+                case 7:
+                    System.out.print("Digite o canal desejado: ");
+                    if (scanner.hasNextInt()) {
+                        int canalDesejado = scanner.nextInt();
+                        tv.irParaCanal(canalDesejado);
+                    } else {
+                        System.out.println("⚠  Canal inválido. Digite um número inteiro.");
+                        scanner.next();
+                    }
+                    break;
+                case 8:  tv.mutar();           break;
+                case 9:  tv.desmutar();        break;
+                case 10: tv.exibirStatus();    break;
+                case 0:  System.out.println("👋 Encerrando o programa."); break;
+                default: System.out.println("⚠  Opção inválida. Tente novamente.");
+            }
+        }
+
+        scanner.close();
+    }
+}
