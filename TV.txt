@@ -1,172 +1,218 @@
 import java.util.Scanner;
 
-public class Televisao {
+public class ListaDeCompras {
 
-    // ── Atributos ──────────────────────────────────────────────
-    private boolean ligada;
-    private boolean mutada;
-    private int volume;
-    private int canal;
+    // ── Armazenamento ──────────────────────────────────────────
+    static final int CAPACIDADE  = 100;
+    static String[]  nomes       = new String[CAPACIDADE];
+    static int[]     quantidades = new int[CAPACIDADE];
+    static double[]  precos      = new double[CAPACIDADE];
+    static int       totalItens  = 0;
+    static Scanner   scanner     = new Scanner(System.in);
 
-    private static final int VOLUME_MIN  = 0;
-    private static final int VOLUME_MAX  = 100;
-    private static final int CANAL_MIN   = 1;
-    private static final int CANAL_MAX   = 999;
+    // ══════════════════════════════════════════════════════════
+    //  MÉTODOS AUXILIARES  (evitam repetição em todo o código)
+    // ══════════════════════════════════════════════════════════
 
-    // ── Construtor ─────────────────────────────────────────────
-    public Televisao() {
-        this.ligada = false;
-        this.mutada = false;
-        this.volume = 50;
-        this.canal  = 1;
+    /** Lê um inteiro >= minimo, rejeitando entradas inválidas em loop. */
+    static int lerInteiro(String mensagem, int minimo) {
+        while (true) {
+            System.out.print(mensagem);
+            if (scanner.hasNextInt()) {
+                int v = scanner.nextInt();
+                scanner.nextLine();
+                if (v >= minimo) return v;
+            } else {
+                scanner.nextLine(); // descarta lixo
+            }
+            System.out.println("  ⚠  Informe um número inteiro >= " + minimo + ".");
+        }
+    }
+
+    /** Lê um inteiro dentro de um intervalo fechado [min, max]. */
+    static int lerInteiroFaixa(String mensagem, int minimo, int maximo) {
+        while (true) {
+            int v = lerInteiro(mensagem, minimo);
+            if (v <= maximo) return v;
+            System.out.println("  ⚠  Valor deve ser entre " + minimo + " e " + maximo + ".");
+        }
+    }
+
+    /** Lê um double >= minimo, rejeitando entradas inválidas em loop. */
+    static double lerDouble(String mensagem, double minimo) {
+        while (true) {
+            System.out.print(mensagem);
+            if (scanner.hasNextDouble()) {
+                double v = scanner.nextDouble();
+                scanner.nextLine();
+                if (v >= minimo) return v;
+            } else {
+                scanner.nextLine();
+            }
+            System.out.printf("  ⚠  Informe um número >= %.2f.%n", minimo);
+        }
+    }
+
+    /** Lê uma String não-vazia, rejeitando espaços em branco em loop. */
+    static String lerTexto(String mensagem) {
+        while (true) {
+            System.out.print(mensagem);
+            String v = scanner.nextLine().trim();
+            if (!v.isEmpty()) return v;
+            System.out.println("  ⚠  O nome não pode ser vazio.");
+        }
+    }
+
+    /** Retorna true e exibe aviso se a lista estiver vazia. */
+    static boolean listaVazia() {
+        if (totalItens == 0) {
+            System.out.println("  ⚠  A lista de compras está vazia.");
+            return true;
+        }
+        return false;
+    }
+
+    /** Retorna o índice do item pelo nome (case-insensitive), ou -1 se não existir. */
+    static int buscarItem(String nome) {
+        for (int i = 0; i < totalItens; i++)
+            if (nomes[i].equalsIgnoreCase(nome)) return i;
+        return -1;
+    }
+
+    /** Exibe a lista e pede ao usuário para escolher um item pelo número.
+     *  Retorna o índice interno (0-based) ou -1 em caso de lista vazia. */
+    static int selecionarItem(String acao) {
+        if (listaVazia()) return -1;
+        listarItens();
+        int num = lerInteiroFaixa("\nNúmero do item para " + acao + ": ", 1, totalItens);
+        return num - 1; // converte para índice 0-based
+    }
+
+    /** Calcula o valor total da lista (sem desconto). */
+    static double calcularTotal() {
+        double total = 0;
+        for (int i = 0; i < totalItens; i++)
+            total += precos[i] * quantidades[i];
+        return total;
     }
 
     // ══════════════════════════════════════════════════════════
-    //  MÉTODOS DE AÇÃO
+    //  AÇÕES DO MENU
     // ══════════════════════════════════════════════════════════
 
-    public void ligar() {
-        if (ligada) {
-            System.out.println("⚠  A televisão já está ligada.");
+    static void adicionarItem() {
+        if (totalItens == CAPACIDADE) {
+            System.out.println("  ⚠  Lista cheia (máx. " + CAPACIDADE + " itens).");
             return;
         }
-        ligada = true;
-        System.out.println("✅ Televisão ligada! Canal: " + canal + " | Volume: " + volume);
+
+        String nome = lerTexto("Nome do item: ");
+        int idx = buscarItem(nome);
+
+        // Item já existe: oferece somar quantidade em vez de duplicar
+        if (idx != -1) {
+            System.out.println("  ⚠  \"" + nome + "\" já está na lista"
+                    + " (quantidade atual: " + quantidades[idx] + ").");
+            System.out.print("     Deseja somar mais unidades? (s/n): ");
+            if (scanner.nextLine().trim().equalsIgnoreCase("s")) {
+                int qtd = lerInteiro("     Quantidade a somar: ", 1);
+                quantidades[idx] += qtd;
+                System.out.println("  ✅ Quantidade atualizada para: " + quantidades[idx]);
+            }
+            return;
+        }
+
+        int    qtd   = lerInteiro("Quantidade: ", 1);
+        double preco = lerDouble("Valor unitário (R$): ", 0.01);
+
+        nomes[totalItens]       = nome;
+        quantidades[totalItens] = qtd;
+        precos[totalItens]      = preco;
+        totalItens++;
+
+        System.out.printf("  ✅ \"%s\" adicionado à lista.%n", nome);
     }
 
-    public void desligar() {
-        if (!ligada) {
-            System.out.println("⚠  A televisão já está desligada.");
-            return;
+    static void listarItens() {
+        if (listaVazia()) return;
+
+        System.out.println("\n  ┌────┬──────────────────────┬──────┬────────────┬─────────────┐");
+        System.out.printf( "  │ %-2s │ %-20s │ %4s │ %10s │ %11s │%n",
+                "#", "ITEM", "QTD", "UNIT. (R$)", "SUBTOTAL (R$)");
+        System.out.println("  ├────┼──────────────────────┼──────┼────────────┼─────────────┤");
+
+        for (int i = 0; i < totalItens; i++) {
+            System.out.printf("  │ %-2d │ %-20s │ %4d │ %10.2f │ %11.2f  │%n",
+                    i + 1, nomes[i], quantidades[i], precos[i], precos[i] * quantidades[i]);
         }
-        ligada = false;
-        mutada = false;
-        System.out.println("🔴 Televisão desligada.");
+        System.out.println("  └────┴──────────────────────┴──────┴────────────┴─────────────┘");
     }
 
-    // ── Volume ─────────────────────────────────────────────────
-
-    public void aumentarVolume() {
-        if (!ligada) {
-            System.out.println("⚠  A televisão está desligada.");
-            return;
-        }
-        if (mutada) {
-            System.out.println("⚠  A televisão está mutada. Desmute antes de alterar o volume.");
-            return;
-        }
-        if (volume >= VOLUME_MAX) {
-            System.out.println("⚠  Volume já está no máximo (" + VOLUME_MAX + ").");
-            return;
-        }
-        volume++;
-        System.out.println("🔊 Volume: " + volume);
+    static void exibirTotal() {
+        if (listaVazia()) return;
+        System.out.printf("%n  💰 Total da compra: R$ %.2f%n", calcularTotal());
     }
 
-    public void diminuirVolume() {
-        if (!ligada) {
-            System.out.println("⚠  A televisão está desligada.");
-            return;
+    static void excluirItem() {
+        int idx = selecionarItem("excluir");
+        if (idx == -1) return;
+
+        String nome = nomes[idx];
+
+        // Desloca todos os elementos uma posição para a esquerda
+        for (int i = idx; i < totalItens - 1; i++) {
+            nomes[i]       = nomes[i + 1];
+            quantidades[i] = quantidades[i + 1];
+            precos[i]      = precos[i + 1];
         }
-        if (mutada) {
-            System.out.println("⚠  A televisão está mutada. Desmute antes de alterar o volume.");
-            return;
-        }
-        if (volume <= VOLUME_MIN) {
-            System.out.println("⚠  Volume já está no mínimo (" + VOLUME_MIN + ").");
-            return;
-        }
-        volume--;
-        System.out.println("🔉 Volume: " + volume);
+        totalItens--;
+        System.out.println("  ✅ \"" + nome + "\" removido da lista.");
     }
 
-    // ── Canal ──────────────────────────────────────────────────
+    static void alterarQuantidade() {
+        int idx = selecionarItem("alterar");
+        if (idx == -1) return;
 
-    public void aumentarCanal() {
-        if (!ligada) {
-            System.out.println("⚠  A televisão está desligada.");
-            return;
-        }
-        if (canal >= CANAL_MAX) {
-            System.out.println("⚠  Canal já está no máximo (" + CANAL_MAX + ").");
-            return;
-        }
-        canal++;
-        System.out.println("📺 Canal: " + canal);
+        System.out.println("  Item: " + nomes[idx]
+                + "  |  Quantidade atual: " + quantidades[idx]);
+        quantidades[idx] = lerInteiro("  Nova quantidade: ", 1);
+        System.out.println("  ✅ Quantidade atualizada.");
     }
 
-    public void diminuirCanal() {
-        if (!ligada) {
-            System.out.println("⚠  A televisão está desligada.");
-            return;
-        }
-        if (canal <= CANAL_MIN) {
-            System.out.println("⚠  Canal já está no mínimo (" + CANAL_MIN + ").");
-            return;
-        }
-        canal--;
-        System.out.println("📺 Canal: " + canal);
-    }
+    static void encerrarLista() {
+        if (listaVazia()) return;
+        listarItens();
 
-    public void irParaCanal(int canalDesejado) {
-        if (!ligada) {
-            System.out.println("⚠  A televisão está desligada.");
-            return;
-        }
-        if (canalDesejado < CANAL_MIN || canalDesejado > CANAL_MAX) {
-            System.out.println("⚠  Canal inválido. Informe um valor entre "
-                    + CANAL_MIN + " e " + CANAL_MAX + ".");
-            return;
-        }
-        if (canalDesejado == canal) {
-            System.out.println("⚠  A televisão já está no canal " + canal + ".");
-            return;
-        }
-        canal = canalDesejado;
-        System.out.println("📺 Trocado para o canal: " + canal);
-    }
+        double total = calcularTotal();
+        System.out.printf("%n  Total bruto: R$ %.2f%n", total);
 
-    // ── Mudo ───────────────────────────────────────────────────
+        // Tabela de formas de pagamento e seus descontos
+        String[] formas    = {"Dinheiro", "Pix", "Cartão da loja", "Cartão de débito", "Cartão de crédito"};
+        double[] descontos = {0.05,       0.05,  0.07,             0.0,                0.0               };
 
-    public void mutar() {
-        if (!ligada) {
-            System.out.println("⚠  A televisão está desligada.");
-            return;
+        System.out.println("\n  Forma de pagamento:");
+        for (int i = 0; i < formas.length; i++) {
+            String desconto = descontos[i] > 0
+                    ? String.format("%.0f%% de desconto", descontos[i] * 100)
+                    : "sem desconto";
+            System.out.printf("    %d - %-20s (%s)%n", i + 1, formas[i], desconto);
         }
-        if (mutada) {
-            System.out.println("⚠  A televisão já está mutada.");
-            return;
-        }
-        mutada = true;
-        System.out.println("🔇 Televisão mutada.");
-    }
 
-    public void desmutar() {
-        if (!ligada) {
-            System.out.println("⚠  A televisão está desligada.");
-            return;
-        }
-        if (!mutada) {
-            System.out.println("⚠  A televisão não está mutada.");
-            return;
-        }
-        mutada = false;
-        System.out.println("🔊 Som restaurado. Volume: " + volume);
-    }
+        int escolha       = lerInteiroFaixa("\n  Escolha: ", 1, formas.length) - 1;
+        double desconto   = descontos[escolha];
+        double valorDesc  = total * desconto;
+        double valorFinal = total - valorDesc;
 
-    // ── Status ─────────────────────────────────────────────────
-
-    public void exibirStatus() {
-        System.out.println("╔══════════════════════════════╗");
-        System.out.println("║       STATUS DA TV           ║");
-        System.out.println("╠══════════════════════════════╣");
-        System.out.println("║ Estado : " + (ligada ? "Ligada  " : "Desligada") + "             ║");
-        if (ligada) {
-            System.out.println("║ Canal  : " + String.format("%-21d", canal) + "║");
-            System.out.println("║ Volume : " + String.format("%-21d", volume) + "║");
-            System.out.println("║ Mudo   : " + String.format("%-21s", (mutada ? "Sim" : "Não")) + "║");
-        }
-        System.out.println("╚══════════════════════════════╝");
+        System.out.println("\n  ╔═══════════════════════════════════════════╗");
+        System.out.println("  ║            RESUMO DO PEDIDO               ║");
+        System.out.println("  ╠═══════════════════════════════════════════╣");
+        System.out.printf( "  ║  Pagamento : %-30s║%n", formas[escolha]);
+        System.out.printf( "  ║  Total bruto       : R$ %,-18.2f║%n", total);
+        if (desconto > 0)
+            System.out.printf("  ║  Desconto (%.0f%%)     : R$ %,-18.2f║%n", desconto * 100, valorDesc);
+        System.out.printf(  "  ║  ► TOTAL A PAGAR   : R$ %,-18.2f║%n", valorFinal);
+        System.out.println("  ╚═══════════════════════════════════════════╝");
+        System.out.println("\n  ✅ Lista encerrada. Boas compras! 🛒");
     }
 
     // ══════════════════════════════════════════════════════════
@@ -175,63 +221,38 @@ public class Televisao {
 
     public static void main(String[] args) {
 
-        Scanner scanner  = new Scanner(System.in);
-        Televisao tv     = new Televisao();
-        int opcao        = -1;
+        String[] opcoes = {
+            "Sair",
+            "Adicionar item",
+            "Consultar lista",
+            "Ver total",
+            "Excluir item",
+            "Alterar quantidade",
+            "Encerrar lista (pagamento)"
+        };
 
+        int opcao = -1;
         while (opcao != 0) {
+            System.out.println("\n  ╔═══════════════════════════════════════╗");
+            System.out.println("  ║          LISTA DE COMPRAS             ║");
+            System.out.println("  ╠═══════════════════════════════════════╣");
+            for (int i = 1; i < opcoes.length; i++)
+                System.out.printf("  ║  %d - %-34s║%n", i, opcoes[i]);
+            System.out.printf(  "  ║  %d - %-34s║%n", 0, opcoes[0]);
+            System.out.println("  ╚═══════════════════════════════════════╝");
 
-            System.out.println("\n╔══════════════════════════════╗");
-            System.out.println("║    CONTROLE DA TELEVISÃO     ║");
-            System.out.println("╠══════════════════════════════╣");
-            System.out.println("║  1 - Ligar                   ║");
-            System.out.println("║  2 - Desligar                ║");
-            System.out.println("║  3 - Aumentar volume         ║");
-            System.out.println("║  4 - Diminuir volume         ║");
-            System.out.println("║  5 - Próximo canal           ║");
-            System.out.println("║  6 - Canal anterior          ║");
-            System.out.println("║  7 - Ir para canal específico║");
-            System.out.println("║  8 - Mutar                   ║");
-            System.out.println("║  9 - Desmutar                ║");
-            System.out.println("║ 10 - Ver status              ║");
-            System.out.println("║  0 - Sair                    ║");
-            System.out.println("╚══════════════════════════════╝");
-            System.out.print("Escolha uma opção: ");
-
-            // Valida se a entrada é um número inteiro
-            if (!scanner.hasNextInt()) {
-                System.out.println("⚠  Entrada inválida. Digite um número.");
-                scanner.next(); // descarta o token inválido
-                continue;
-            }
-
-            opcao = scanner.nextInt();
+            opcao = lerInteiroFaixa("  Opção: ", 0, opcoes.length - 1);
 
             switch (opcao) {
-                case 1:  tv.ligar();           break;
-                case 2:  tv.desligar();        break;
-                case 3:  tv.aumentarVolume();  break;
-                case 4:  tv.diminuirVolume();  break;
-                case 5:  tv.aumentarCanal();   break;
-                case 6:  tv.diminuirCanal();   break;
-                case 7:
-                    System.out.print("Digite o canal desejado: ");
-                    if (scanner.hasNextInt()) {
-                        int canalDesejado = scanner.nextInt();
-                        tv.irParaCanal(canalDesejado);
-                    } else {
-                        System.out.println("⚠  Canal inválido. Digite um número inteiro.");
-                        scanner.next();
-                    }
-                    break;
-                case 8:  tv.mutar();           break;
-                case 9:  tv.desmutar();        break;
-                case 10: tv.exibirStatus();    break;
-                case 0:  System.out.println("👋 Encerrando o programa."); break;
-                default: System.out.println("⚠  Opção inválida. Tente novamente.");
+                case 1: adicionarItem();     break;
+                case 2: listarItens();       break;
+                case 3: exibirTotal();       break;
+                case 4: excluirItem();       break;
+                case 5: alterarQuantidade(); break;
+                case 6: encerrarLista();     break;
+                case 0: System.out.println("\n  👋 Até logo!"); break;
             }
         }
-
         scanner.close();
     }
 }
