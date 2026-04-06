@@ -5,8 +5,6 @@ Ferramenta,Foice,0.0,100,100,colher
 Ferramenta,Picareta,0.0,100,100,minerar
 Ferramenta,Vara de Pesca,0.0,100,100,pescar
 Ferramenta,Espada,0.0,100,100,lutar
-Recurso,Madeira,10.0,Madeira,,
-Recurso,Madeira,10.0,Madeira,,
 Recurso,Anchova,30.0,Peixe,,
 Recurso,Anchova,30.0,Peixe,,
 Recurso,Anchova,30.0,Peixe,,
@@ -22,3 +20,4 @@ Recurso,Madeira,10.0,Madeira,,
 Recurso,Madeira,10.0,Madeira,,
 Recurso,Madeira,10.0,Madeira,,
 Recurso,Madeira,10.0,Madeira,,
+Recurso,Pedra,5.0,Mineral,,

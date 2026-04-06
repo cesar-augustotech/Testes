@@ -1,9 +1,13 @@
 package stardew;
 
-import stardew.engine.GameEngine;
+import stardew.engine.GameGUI;
+import javax.swing.SwingUtilities;
 
 public class Main {
     public static void main(String[] args) {
-        new GameEngine().iniciar();
+        SwingUtilities.invokeLater(() -> {
+            GameGUI janelaJogo = new GameGUI();
+            janelaJogo.setVisible(true);
+        });
     }
 }
