@@ -1,0 +1,17 @@
+nome_fazenda,Fazenda do César
+PARCELAS
+id,irrigada,nomeSemente,valorSemente,dias,diasCrescimento,estacaoSemente,culturaGerada
+1,true,Semente de Morango,35.0,1,8,PRIMAVERA,Morango
+2,true,Semente de Morango,35.0,1,8,PRIMAVERA,Morango
+3,true,Semente de Batata,20.0,1,6,PRIMAVERA,Batata
+4,false,,,0,0,,
+5,false,,,0,0,,
+6,false,,,0,0,,
+7,false,,,0,0,,
+8,false,,,0,0,,
+9,false,,,0,0,,
+10,false,,,0,0,,
+11,false,,,0,0,,
+12,false,,,0,0,,
+ANIMAIS
+nome,tipo,felicidade

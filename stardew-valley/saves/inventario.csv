@@ -1,0 +1,24 @@
+tipo,nome,valor,extra1,extra2,extra3
+Ferramenta,Enxada,0.0,100,100,plantar
+Ferramenta,Regador,0.0,100,100,irrigar
+Ferramenta,Foice,0.0,100,100,colher
+Ferramenta,Picareta,0.0,100,100,minerar
+Ferramenta,Vara de Pesca,0.0,100,100,pescar
+Ferramenta,Espada,0.0,100,100,lutar
+Recurso,Madeira,10.0,Madeira,,
+Recurso,Madeira,10.0,Madeira,,
+Recurso,Anchova,30.0,Peixe,,
+Recurso,Anchova,30.0,Peixe,,
+Recurso,Anchova,30.0,Peixe,,
+Recurso,Sardinha,75.0,Peixe,,
+Recurso,Anchova,30.0,Peixe,,
+Recurso,Madeira,10.0,Madeira,,
+Recurso,Madeira,10.0,Madeira,,
+Recurso,Madeira,10.0,Madeira,,
+Recurso,Madeira,10.0,Madeira,,
+Recurso,Madeira,10.0,Madeira,,
+Recurso,Madeira,10.0,Madeira,,
+Recurso,Madeira,10.0,Madeira,,
+Recurso,Madeira,10.0,Madeira,,
+Recurso,Madeira,10.0,Madeira,,
+Recurso,Madeira,10.0,Madeira,,
